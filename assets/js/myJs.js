@@ -116,7 +116,7 @@
     AOS.init({
       duration: 1000,
       easing: 'ease-in-out',
-      once: true,
+      once: false,
       mirror: true
     });
   }
@@ -257,9 +257,7 @@
     // Optionally, call the function on load to check the initial position if needed
     checkElementsPosition(); 
 
-  } else {
-    console.log('This is not a touchscreen device.');
-  }
+  }  
 
 
 
