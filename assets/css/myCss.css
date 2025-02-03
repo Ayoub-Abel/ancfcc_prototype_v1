@@ -649,7 +649,7 @@ div#quick-services {
   position: fixed;
   top: 0;
   z-index: 99999;
-  background: #5f3c1dc7;
+  background: #0a013ee8;
   left: 0;
   height: -webkit-fill-available;
   width: 100%;
@@ -1856,6 +1856,15 @@ section#formulaires a {
 
 .stats .stats_wide_2 .heading2 {
   font-size: 1.2em
+}
+
+@media (max-width: 575.98px) {  /* Extra-small (xs) devices */
+    .stats .mt-xs-3 {
+        margin-top: 1rem !important; /* Equivalent to Bootstrap's mb-3 */
+    }
+    .stats .flex-dir-xs{
+      flex-direction: column
+    } 
 }
 
 /*--------------------------------------------------------------
