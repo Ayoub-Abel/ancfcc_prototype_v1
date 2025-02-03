@@ -1676,6 +1676,12 @@ section#formulaires a {
   box-shadow: 0px 0px 15px -3px rgb(0 0 0 / 28%)
 }
 
+.formulaire {
+  gap: 1rem;
+  flex-wrap: wrap;
+  flex-direction: row !important
+}
+
 /*--------------------------------------------------------------
 # End formulaires Section
 --------------------------------------------------------------*/
