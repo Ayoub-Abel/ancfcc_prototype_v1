@@ -866,8 +866,9 @@ div#quick-services {
 }
 
 @media (max-width: 575px) {
-  .footer .footer-links ul i {
-    display: none
+  .footer .footer-links ul {
+    margin: 0 auto;
+    width: 211px
   }
 
   .footer .row .col-md-3 {
