@@ -492,9 +492,10 @@ h6 {
     color: var(--nav-color);
     font-size: 28px;
     line-height: 0;
-    margin-right: 10px;
+    margin-right: 8px;
     cursor: pointer;
     transition: color 0.3s;
+    margin-top: 13px;
   }
 
   .navmenu {
@@ -867,8 +868,8 @@ div#quick-services {
 
 @media (max-width: 575px) {
   .footer .footer-links ul {
-    margin: 0 auto;
-    width: 211px
+    margin: 0 auto !important;
+    width: 211px;
   }
 
   .footer .row .col-md-3 {
