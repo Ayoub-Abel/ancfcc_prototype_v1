@@ -122,7 +122,7 @@
   }
   window.addEventListener('load', aosInit);
 
-   
+
   /**
    * Init swiper sliders
    */
@@ -255,17 +255,21 @@
     window.addEventListener('scroll', checkElementsPosition);
 
     // Optionally, call the function on load to check the initial position if needed
-    checkElementsPosition(); 
+    checkElementsPosition();
 
-  }  
+  }
 
+  window.addEventListener('load', function () {
+    // Generate a random version code (e.g., a random string of numbers and letters)
+    var randomVersion = Math.random().toString(36).substr(2, 9); // Generates a random alphanumeric string
 
+    // Update the href of the CSS link with the random version query parameter
+    var cssLink = document.getElementById('myCssLink');
+    cssLink.href = "assets/css/myCss.css?v=" + randomVersion;
 
-
-
-
-
-
-
+    // Update the src of the JS script with the random version query parameter
+    var jsScript = document.getElementById('myJsScript');
+    jsScript.src = "assets/js/myScript.js?v=" + randomVersion;
+  });
 
 })();
