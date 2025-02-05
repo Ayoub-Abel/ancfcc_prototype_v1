@@ -14,9 +14,9 @@
   --heading-color: #08033b;
   /* #040677; */
   /* Color for headings, subheadings and title throughout the website */
-  --accent-color: #ff6700;
+  --accent-color: #d38600;
 
-  --orange-light: #fec097;
+  --orange-light:#ebcb99;
   /* Accent color that represents your brand on the website. It's used for buttons, links, and other elements that need to stand out */
   --surface-color: #ffffff;
   /* The surface color is used as a background of boxed elements within sections, such as cards, icon boxes, or other elements that require a visual separation from the global background. */
@@ -28,7 +28,7 @@
 :root {
   --nav-color: #ffffff;
   /* The default color of the main navmenu links */
-  --nav-hover-color: #ff6700;
+  --nav-hover-color: #d38600;
   /* Applied to main navmenu links when they are hovered over or active */
   --nav-mobile-background-color: #ffffff;
   /* Used as the background color for mobile navigation menu */
@@ -36,7 +36,7 @@
   /* Used as the background color for dropdown items that appear when hovering over primary navigation items */
   --nav-dropdown-color: #08005e;
   /* Used for navigation links of the dropdown items in the navigation menu. */
-  --nav-dropdown-hover-color: #ff6700;
+  --nav-dropdown-hover-color: #d38600;
   /* Similar to --nav-hover-color, this color is applied to dropdown navigation links when they are hovered over. */
 }
 
@@ -111,7 +111,7 @@
 }
 
 h2.section__title svg path {
-  stroke: #ff670026;
+  stroke: var(--orange-light);
 }
 
 .dark {
@@ -125,7 +125,7 @@ h2.section__title svg path {
   padding-bottom: 8px;
   text-align: start;
   border-bottom: 2px solid var(--accent-color);
-  font-weight: 600;
+  font-weight: 800;
   text-wrap-mode: nowrap;
 }
 
@@ -136,7 +136,7 @@ h2.section__title svg path {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: #ff6700;
+  background: var(--accent-color);
 }
 
 .section__title span:after {
@@ -290,6 +290,13 @@ h6 {
     top: 20px;
 }
 
+#lang a {
+    font-size: inherit;
+    padding: 0;
+    color: unset;
+    font-weight: normal;
+}
+
 @media (max-width: 1199px) {
   .header #lang  {
     position: initial;
@@ -392,24 +399,6 @@ h6 {
     margin-top: 3px;
   }
 
-  .navmenu>ul>li>a:before {
-    content: "";
-    position: absolute;
-    height: 2px;
-    bottom: -6px;
-    left: 0;
-    background-color: var(--nav-hover-color);
-    visibility: hidden;
-    width: 0px;
-    transition: all 0.3s ease-in-out 0s;
-  }
-
-  .navmenu .menu-item:hover:before,
-  .navmenu li:hover>a:before,
-  .navmenu .active:before {
-    visibility: visible;
-    width: 25px;
-  }
 
   .navmenu li:hover>a,
   .navmenu .active,
@@ -541,6 +530,10 @@ h6 {
     transition: 0.3s;
   }
 
+  .ar-page .navmenu .menu-item i{
+    transform: rotate(180deg)
+  }
+
   .navmenu .menu-item i:hover,
   .navmenu .menu-item:focus i:hover {
     background-color: var(--accent-color);
@@ -558,6 +551,11 @@ h6 {
     background-color: var(--accent-color);
     /* color: var(--contrast-color); */
     transform: rotate(-90deg);
+  }
+
+  .ar-page .navmenu .active i,
+  .ar-page.navmenu .active:focus i {
+    transform: rotate(270deg)
   }
 
   .navmenu .dropdown ul {
@@ -604,6 +602,12 @@ h6 {
   .mobile-nav-active .navmenu>ul {
     display: block;
   }
+
+  .ar-page .navmenu{
+    direction: rtl
+  }
+
+  
 }
 
 
@@ -834,7 +838,7 @@ div#quick-services {
   background: #ffffff1c;
   padding: 10px;
   border-radius: 9px;
-  font-size: 16px;
+  font-size: 14px;
   font-family: 'Roboto';
   color: #00ff2d;
   font-weight: 500;
@@ -919,7 +923,7 @@ div#quick-services {
   right: 15px;
   bottom: 15px;
   z-index: 99999;
-  background-color: #ab4500;
+  background-color: var(--accent-color);
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -933,8 +937,9 @@ div#quick-services {
 }
 
 .scroll-top:hover {
-  background-color: color-mix(in srgb, #ab4500, transparent 20%);
-  color: var(--contrast-color);
+  background-color: color-mix(in srgb, var(--accent-color), transparent 20%);
+  color: var(
+  --contrast-color);
 }
 
 .scroll-top.active {
@@ -1397,18 +1402,7 @@ span.prices {
   left: -50%;
   width: 200%;
   height: 200%;
-  background: conic-gradient(#003fff,
-      #003fffd6,
-      #003fff8c,
-      #ff7300,
-      #ff7300c2,
-      #ff730082,
-      #ff730082,
-      #ff7300c2,
-      #ff7300,
-      #003fff8c,
-      #003fffd6,
-      #003fff);
+  background: conic-gradient(#003fff, #003fffd6, #003fff8c, #d38600, #d38600d9, #d3860082, #d38600d9, #d38600, #003fff8c, #003fffd6, #003fff);
   /* animation: rotate 2s linear infinite; */
   rotate: 310deg;
   opacity: 0;
@@ -1965,7 +1959,7 @@ section#formulaires a {
 a#all-events {
   display: block;
   margin-top: 20px;
-  background: #523708c4;
+  background: var(--accent-color);
   width: fit-content;
   color: #fff;
   padding: 10px 16px;
