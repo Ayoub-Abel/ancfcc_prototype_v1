@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>ANCFCC</title>
+  <meta name="description" content="">
+  <meta name="keywords" content="">
+
+  <!-- Favicons -->
+  <link href="assets/img/logo sans titre.png" rel="icon">
+  <link href="assets/img/logo sans titre.png" rel="apple-touch-icon">
+
+  <!-- Fonts -->
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link href="https://fonts.gstatic.com" rel="preconnect" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&family=Raleway:wght@200;300;400;500;600;700;800;900&family=Beiruti:wght@200;300;400;500;600;700;800;900&display=swap"
+    rel="stylesheet">
+
+  <!-- Vendor CSS Files -->
+  <link href="assets/vendor/fontawsome-v6.7.1/css/all.css?" rel="stylesheet">
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  
+
+  <!-- Main CSS File -->
+  <link id="myCssLink" href="assets/css/myCss.css" rel="stylesheet">
+</head>
+
+<body class="pages scrolled">
+
+
+  <header id="header" class="header d-flex align-items-center fixed-top">
+    <div class="container-fluid container-xl position-relative d-flex align-items-center justify-content-between">
+
+      <a href="index.html" class="logo d-flex align-items-center">
+        <!-- Uncomment the line below if you also wish to use an image logo -->
+        <img id="main-logo" src="assets/img/logo_FR.png" alt="">
+        <img id="mini-logo" src="assets/img/logo sans titre.png" class="d-none" alt="">
+      </a>
+
+      <nav id="navmenu" class="navmenu">
+        <ul>
+          <li class="dropdown">
+            <div class="menu-item"><span>Présentation</span> <i
+                class="fa-solid fa-circle-chevron-left toggle-dropdown"></i></div>
+            <ul>
+              <li><a href="#">Mot du Directeur Général</a></li>
+              <li><a href="#">Missions et Attributions</a></li>
+              <li><a href="#">Conseil d'Administration</a></li>
+              <li><a href="#">Organigramme</a></li>
+              <li><a href="#">Chiffres Clés</a></li>
+              <li><a href="#">Capital Humain</a></li>
+              <li><a href="#">Réseau des blocs fonciers </a></li>
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <div class="menu-item"><span>Nos Métiers</span> <i
+                class="fa-solid fa-circle-chevron-left toggle-dropdown"></i></div>
+            <ul>
+              <li><a href="#">Conservateur Général</a></li>
+              <li><a href="#">Conservation Foncière-Cadastre</a></li>
+              <li><a href="#">Cartographie</a></li>
+
+            </ul>
+          </li>
+          <li class="dropdown">
+            <div class="menu-item"><span>Produits et Formalités</span> <i
+                class="fa-solid fa-circle-chevron-left toggle-dropdown"></i></div>
+            <ul>
+              <li><a href="#">Produits </a></li>
+              <li><a href="#">Formalités </a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <div class="menu-item"><span>Espace Média</span> <i
+                class="fa-solid fa-circle-chevron-left toggle-dropdown"></i></div>
+            <ul>
+              <li><a href="#">Publications</a></li>
+
+              <li><a href="#">Médiathèque</a></li>
+            </ul>
+          </li>
+          <li class="dropdown">
+            <div class="menu-item"><span>Espace Professionnel</span> <i
+                class="fa-solid fa-circle-chevron-left toggle-dropdown"></i></div>
+            <ul>
+              <li><a href="#">Espace Cadastre & Cartographie</a></li>
+              <li><a href="#">Espace conservation foncière - Notaire</a></li>
+              <li><a href="#">Espace conservation foncière - Adoul</a></li>
+
+            </ul>
+          </li>
+
+
+
+
+          <li id="lang"><i class="fa-duotone fa-solid fa-earth-africa"></i>
+            <a href="./ar.html">Version Arabe</a>
+          </li>
+
+        </ul>
+
+        <!-- <div class="language"><i class="fa-duotone fa-solid fa-earth-africa"></i> <span>Version Arabe</span></div> -->
+        <!-- <div class="language"><i class="fa-duotone fa-solid fa-earth-africa"></i> <span>Version Arabe</span></div> -->
+
+        <i class="mobile-nav-toggle d-xl-none fa-duotone fa-solid fa-bars"></i>
+      </nav>
+    </div>
+
+    <div id="quick-services-btn"><i class="fa-solid fa-business-time"></i>
+    </div>
+
+  </header>
+
+  <main class="main">
+    <div class="container content">
+      <div id="demande-certificat">
+
+        <div class="row">
+          <div class="col-lg-12">
+            <h1 class="title">Demande Certificat de Propriété</h1>
+            <p class="description">Cette rubrique sert à demander le certificat de propriété en ligne en remplissant
+              soigneusement le formulaire disponible.
+              <br>
+              Une fois votre demande est passée et son paiement est effectué vous recevrez par SMS un code de suivi.
+
+            </p>
+            <h6 class="advices"><i class="fa-duotone fa-solid fa-circle-exclamation"></i> Les demandes des certificats
+              de propriété électroniques seront traitées pendant les heures de travail.</h6>
+
+            <form id="demande-cert-form" action="" method="post" class="form">
+              <div class="steps">
+                <div class="step active" id="st1">
+                  <span class="step-number">1</span>
+                  <span class="step-title">Informations personnelles</span>
+                </div>
+                <div class="step" id="st2">
+                  <span class="step-number">2</span>
+                  <span class="step-title">Informations sur titres fonciers</span>
+                </div>
+                <div class="step" id="st3">
+                  <span class="step-number">3</span>
+                  <span class="step-title">Validation numéro téléphone</span>
+                </div>
+              </div>
+
+              <fieldset id="step1">
+                <legend>Informations personnelles</legend>
+                <div class="row">
+                  <div class="col-md-6 form-group ">
+                    <div class="demander-type">
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="type-demandeur" id="particulier"
+                          value="particulier" checked>
+                        <label class="form-check-label" for="particulier">
+                          Particulier
+                        </label>
+                      </div>
+                      <div class="form-check">
+                        <input class="form-check-input" type="radio" name="type-demandeur" id="professionnel"
+                          value="professionnel">
+                        <label class="form-check-label" for="professionnel">
+                          Professionnel
+                        </label>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="professionnel-fields row  col-md-6">
+                    <div class="form-group col-md-6">
+                      <label for="ice">ICE</label>
+                      <input type="text" class="input-req form-control inputs-alphanum inputs-uppercase" id="ice"
+                        name="ice">
+                    </div>
+                    <div class="form-group  col-md-6">
+                      <label for="identifiant-fiscal">Identifiant fiscal</label>
+                      <input type="text" class="input-req form-control inputs-alphanum inputs-uppercase"
+                        id="identifiant-fiscal" name="identifiant-fiscal">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+
+                  <div class="col-md-3 form-group">
+                    <label for="nom">Nom</label>
+                    <input type="text" name="nom" id="nom" class="input-req form-control inputs-fr inputs-uppercase">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="prenom">Prénom</label>
+                    <input type="text" name="prenom" id="prenom"
+                      class="input-req form-control inputs-fr inputs-uppercase">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="nom-ar">Nom en Arabe</label>
+                    <input type="text" name="nom-ar" id="nom-ar" class="input-req form-control inputField" dir="rtl">
+                    <div class="keyboardContainer"></div>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="prenom-ar">Prénom en Arabe</label>
+                    <input type="text" name="prenom-ar" id="prenom-ar" class="input-req form-control inputField"
+                      dir="rtl">
+                    <div class="keyboardContainer"></div>
+                  </div>
+                  <br>
+
+                  <div class="col-md-1 form-group">
+                    <label for="identity-type">Type ID</label>
+                    <select name="identity-type" id="identity-type" class="input-req form-control">
+                      <option value="cin">CIN</option>
+                      <option value="passport">Passport</option>
+                      <option value="carte-sejour">Carte de Séjour</option>
+                    </select>
+                  </div>
+                  <div class="col-md-2 form-group">
+                    <label for="identity-number">Numéro ID</label>
+                    <input type="text" name="identity-number" id="identity-number"
+                      class="input-req form-control inputs-alphanum inputs-uppercase">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="email">E-mail</label>
+                    <input type="text" name="email" id="email" class="form-control inputs-email">
+                  </div>
+
+                  <div class="col-md-6 form-group">
+                    <label for="adresse">Adresse</label>
+                    <input type="text" name="adresse" id="adresse" class="input-req form-control inputs-adresse">
+                  </div>
+
+                </div>
+                <div class="wizard-btns">
+                  <button id="next2" class="btn-steps">Suivant</button>
+                </div>
+              </fieldset>
+
+              <fieldset class="d-none" id="step2">
+                <legend>Informations sur les titres fonciers</legend>
+
+                <div class="row">
+                  <div class="col-md-3 form-group">
+                    <label for="DropDownConservation">Conservation foncière</label>
+                    <select name="DropDownConservation" id="DropDownConservation" class="input-req form-control inputs-uppercase">
+                      <!-- Options will be populated dynamically -->
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="num-titre">Numéro titre</label>
+                    <input type="text" name="num-titre" id="num-titre" class="input-req form-control inputs-number">
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="id-indice">Indice</label>
+                    <select name="id-indice" id="id-indice" class="input-req form-control inputs-uppercase">
+                      <option value=""></option>
+                      <option value="273">01</option>
+                      <option value="274">08</option>
+                      <option value="275">12</option>
+                      <option value="276">15</option>
+                      <option value="277">25</option>
+                      <option value="278">33</option>
+                      <option value="279">34</option>
+                      <option value="280">47</option>
+                      <option value="281">53</option>
+                      <option value="282">63</option>
+                      <option value="283">C</option>
+                      <option value="284">D</option>
+                      <option value="285">E</option>
+                      <option value="286">T</option>
+                      <option value="500">D2</option>
+                      <option value="548">D1</option>
+                      <option value="561">86</option>
+                    </select>
+                  </div>
+                  <div class="col-md-3 form-group">
+                    <label for="id-indice-special">Indice spécial</label>
+                    <select name="id-indice-special" id="id-indice-special" class="form-control inputs-uppercase">
+                      <option value=""></option>
+                      <option value="1">BIZ</option>
+                      <option value="2">BIZ1</option>
+                      <option value="3">R</option>
+
+                    
+                    </select>
+                  </div> 
+
+                  <button id="addTitreFoncier"><i class="fa-duotone fa-solid fa-circle-plus me-2"></i> Ajouter le titre
+                    foncier</button>
+                  
+                  <div class="list-titre-added">
+                    <table class="table" >
+                      <thead>
+                        <tr>
+                          <th></th>
+                          <th>Titre foncier</th>
+                          <th>Conservation foncière</th>
+                          <th></th>
+                        </tr>
+                      </thead>
+                      <tbody id="titreFoncierTableBody">
+                         
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="wizard-btns">
+                    <button id="prev1" class="btn-preview">Précedent</button>
+                    <button id="next3" class="btn-steps">Suivant</button>
+                  </div>
+              </fieldset>
+
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+  <div id="quick-services">
+    <div class="container">
+      <div class="box-services">
+        <!-- Box 1 -->
+
+        <div class="service-box">
+          <span class="prices">100 DH</span>
+          <i class="icons fa-duotone fa-thin fa-file-certificate"></i>
+          <h3 class="service-title">Certificat de propriété</h3>
+          <div class="service-buttons">
+            <a class="service-btn" href="./demande_certificat.html">Commander</a>
+            <a class="service-btn">Suivre ma commande</a>
+          </div>
+        </div>
+        <div class="service-box">
+          <span class="prices">100 DH</span>
+          <div class="icons icon-merge">
+            <i class="fa-duotone fa-solid fa-layer-group min-icon"></i>
+            <i class="fa-duotone fa-thin fa-map"></i>
+          </div>
+          <h3 class="service-title">Plan Cadastral</h3>
+          <div class="service-buttons">
+            <a class="service-btn">Commander</a>
+            <a class="service-btn">Suivre ma Commande</a>
+          </div>
+        </div>
+
+        <div class="service-box">
+          <span class="prices">15 DH</span>
+          <div class="icons icon-merge">
+            <i class="fa-duotone fa-solid fa-calculator-simple min-icon"></i>
+            <i class="fa-duotone fa-solid fa-square-dashed"></i>
+          </div>
+          <h3 class="service-title">Calcul de Contenance</h3>
+          <div class="service-buttons">
+            <a class="service-btn">Commander</a>
+            <a class="service-btn">Suivre ma Commande</a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <footer id="footer" class="footer dark-background">
+
+    <div class="container footer-top">
+      <div class="row gy-4">
+        <div class="col-md-3  footer-about">
+          <a href="index.html" class="logo d-flex align-items-center">
+            <img src="assets/img/logo_FR.png" alt="">
+          </a>
+        </div>
+
+        <div class="col-md-3 footer-links">
+          <h4>LIENS</h4>
+          <ul>
+            <li><a href="#services"><i class="fa-solid fa-arrow-right-long"></i>Services en ligne</a></li>
+            <li><a href="#formulaires"><i class="fa-solid fa-arrow-right-long"></i>Formulaires en ligne</a></li>
+            <li><a href="#faq"><i class="fa-solid fa-arrow-right-long"></i>Foire aux questions</a></li>
+            <li><a href="#events"><i class="fa-solid fa-arrow-right-long"></i>Actualités et événements</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3  footer-links">
+          <h4>NOS MÉTIERS</h4>
+          <ul>
+            <li><a href="#"><i class="fa-solid fa-arrow-right-long"></i>Conservation foncière</a></li>
+            <li><a href="#"><i class="fa-solid fa-arrow-right-long"></i>Cadastre</a></li>
+            <li><a href="#"><i class="fa-solid fa-arrow-right-long"></i>Cartographie</a></li>
+          </ul>
+        </div>
+
+        <div class="col-md-3  footer-about">
+          <h4>CONTACT</h4>
+
+          <div class="footer-contact">
+            <p><strong>Adresse: </strong> <span>Avenue Abderrahim Bouabid,</span></p>
+            <p>Hay Riad, Rabat</p>
+            <p class="mt-3"><strong>Téléphone:</strong> <span>+212 6 60 10 27 01 <b>/ 02 / 03 / 04 / 05 / 06</b></span>
+            </p>
+            <p><strong>Fax:</strong> <span>+212 5 37 70 58 85</span></p>
+
+          </div>
+
+        </div>
+        <div class="contact-info">
+          <p>
+            Pour toute réclamation, suggestion ou information, contactez le numéro suivant : <b>+212 8 00 00 29 29</b>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="container copyright text-center mt-4">
+      <p> <strong class="px-1 sitename">Agence Nationale de la Conservation Foncière, du Cadastre et de la
+          Cartographie</strong>
+        <br><span><b>ANCFCC</b> . Tous les droits sont réservés © </span><span>2025 </span>
+      </p>
+
+    </div>
+
+  </footer>
+
+  <!-- Scroll Top -->
+  <a href="#" id="scroll-top" class="scroll-top d-flex align-items-center justify-content-center">
+    <i class="fa-duotone fa-solid fa-arrow-up"></i>
+  </a>
+
+  <!-- Preloader -->
+  <div id="preloader"></div>
+
+  <!-- Vendor JS Files -->
+  <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/vendor/aos/aos.js"></script>
+  <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Main JS File -->
+  <script id="myJsScript" src="assets/js/myJs.js"></script>
+  <script id="myJsScript" src="assets/js/validation.js"></script>
+
+
+</body>
+
+</html>

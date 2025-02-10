@@ -1,20 +1,8 @@
+
+
 (function () {
   "use strict";
-
-  /**
-   * Apply .scrolled class to the body as the page is scrolled down
-   */
-  function toggleScrolled() {
-    const selectBody = document.querySelector('body');
-    const selectHeader = document.querySelector('#header');
-    if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
-    window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
-
-  }
-
-  document.addEventListener('scroll', toggleScrolled);
-  window.addEventListener('load', toggleScrolled);
-
+   
   /**
    * Mobile nav toggle
    */
@@ -109,153 +97,204 @@
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
 
-  /**
-   * Animation on scroll function and init
-   */
-  function aosInit() {
-    AOS.init({
-      duration: 1000,
-      easing: 'ease-in-out',
-      once: false,
-      mirror: true
-    });
-  }
-  window.addEventListener('load', aosInit);
 
 
-  /**
-   * Init swiper sliders
-   */
+  if (document.querySelector('body').classList.contains('home-page')) {
 
-  const swiper = new Swiper('.events-carousel', {
-    slidesPerView: 1,
-    spaceBetween: 20,
-    loop: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev',
-    },
-    pagination: {
-      el: '.swiper-pagination',
-      clickable: true,
-    },
-    autoplay: {
-      delay: 3000, // Time in milliseconds between slides
-      disableOnInteraction: false, // Keeps autoplay running after interaction
-    },
-    speed: 800, // Smooth transition speed
-    breakpoints: {
-      768: {
-        slidesPerView: 2,
-        spaceBetween: 30,
-      },
-      1024: {
-        slidesPerView: 3,
-        spaceBetween: 40,
-      },
-    },
-  });
+    /**
+ * Apply .scrolled class to the body as the page is scrolled down
+ */
+    function toggleScrolled() {
+      const selectBody = document.querySelector('body');
+      const selectHeader = document.querySelector('#header');
+      if (!selectHeader.classList.contains('scroll-up-sticky') && !selectHeader.classList.contains('sticky-top') && !selectHeader.classList.contains('fixed-top')) return;
+      window.scrollY > 100 ? selectBody.classList.add('scrolled') : selectBody.classList.remove('scrolled');
 
-  // Stop autoplay on hover
-  const carouselElement = document.querySelector('.events-carousel');
-  carouselElement.addEventListener('mouseenter', () => {
-    swiper.autoplay.stop();
-  });
-  carouselElement.addEventListener('mouseleave', () => {
-    swiper.autoplay.start();
-  });
+    }
 
-  /**
-   * Frequently Asked Questions Toggle
-   */
-  document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
-    faqItem.addEventListener('click', () => {
-      faqItem.parentNode.classList.toggle('faq-active');
-    });
-  });
+    document.addEventListener('scroll', toggleScrolled);
+    window.addEventListener('load', toggleScrolled);
 
-  /**
-   * Correct scrolling position upon page load for URLs containing hash links.
-   */
-  window.addEventListener('load', function (e) {
-    if (window.location.hash) {
-      if (document.querySelector(window.location.hash)) {
+    const text = "Agence Nationale de la Conservation Foncière, du Cadastre et de la Cartographie";
+    const words = text.split(" ");
+    const typingElement = document.getElementById("ancfcc-typing");
+
+    let wordIndex = 0;
+    let letterIndex = 0;
+
+    function typeNextLetter() {
+      if (wordIndex < words.length) {
+        if (letterIndex < words[wordIndex].length) {
+          const letter = words[wordIndex][letterIndex];
+          const span = document.createElement(letter === letter.toUpperCase() && letter.match(/[A-ZÀ-Ÿ]/) ? "b" : "span");
+          span.textContent = letter;
+          typingElement.appendChild(span);
+          letterIndex++;
+          setTimeout(typeNextLetter, 25); // Typing speed (25ms per letter)
+        } else {
+          typingElement.innerHTML += " "; // Add a space after each word
+          wordIndex++;
+          letterIndex = 0;
+          setTimeout(typeNextLetter, 400); // Pause 500ms after each word
+        }
+      } else {
         setTimeout(() => {
-          let section = document.querySelector(window.location.hash);
-          let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
-          window.scrollTo({
-            top: section.offsetTop - parseInt(scrollMarginTop),
-            behavior: 'smooth'
-          });
-        }, 100);
+          typingElement.style.borderRight = "none"; // Remove border after 1 second
+        }, 1000);
       }
     }
-  });
 
-  /**
-   * Navmenu Scrollspy
-   */
-  let navmenulinks = document.querySelectorAll('.navmenu a');
+    typeNextLetter();
 
-  function navmenuScrollspy() {
-    navmenulinks.forEach(navmenulink => {
-      if (!navmenulink.hash) return;
-      let section = document.querySelector(navmenulink.hash);
-      if (!section) return;
-      let position = window.scrollY + 200;
-      if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
-        document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
-        navmenulink.classList.add('active');
-      } else {
-        navmenulink.classList.remove('active');
-      }
-    })
-  }
-  window.addEventListener('load', navmenuScrollspy);
-  document.addEventListener('scroll', navmenuScrollspy);
-
-
-  const isTouchDevice = () => {
-    return (
-      'ontouchstart' in window || // Check for touch events in the browser
-      (window.DocumentTouch && document instanceof DocumentTouch) || // Check for DocumentTouch (older Safari)
-      navigator.maxTouchPoints > 0 || // Check for maxTouchPoints (modern browsers)
-      navigator.msMaxTouchPoints > 0 // Check for msMaxTouchPoints (IE/Edge)
-    );
-  };
-
-  // Usage
-  if (isTouchDevice()) {
-    // Function to check and add/remove class to elements
-    function checkElementsPosition() {
-      const elements = document.querySelectorAll('.service-box'); // Select all elements (adjust selector)
-      const screenHeight = window.innerHeight;
-
-      elements.forEach(element => {
-        const elementRect = element.getBoundingClientRect();
-
-        // Check if the element is centered on the screen (within a threshold range)
-        const isCentered = elementRect.top <= screenHeight / 2 && elementRect.bottom >= screenHeight / 2;
-
-        if (isCentered) {
-          // Add the 'service-handled' class if it's not already added
-          if (!element.classList.contains('service-handled')) {
-            element.classList.add('service-handled');
-          }
-        } else {
-          // Remove the 'service-handled' class if the element has passed the center
-          if (element.classList.contains('service-handled')) {
-            element.classList.remove('service-handled');
-          }
-        }
+    /**
+     * Animation on scroll function and init
+     */
+    function aosInit() {
+      AOS.init({
+        duration: 1000,
+        easing: 'ease-in-out',
+        once: false,
+        mirror: true
       });
     }
+    window.addEventListener('load', aosInit);
 
-    // Listen to scroll events
-    window.addEventListener('scroll', checkElementsPosition);
 
-    // Optionally, call the function on load to check the initial position if needed
-    checkElementsPosition();
+    /**
+     * Init swiper sliders
+     */
+
+    const swiper = new Swiper('.events-carousel', {
+      slidesPerView: 1,
+      spaceBetween: 20,
+      loop: true,
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      autoplay: {
+        delay: 3000, // Time in milliseconds between slides
+        disableOnInteraction: false, // Keeps autoplay running after interaction
+      },
+      speed: 800, // Smooth transition speed
+      breakpoints: {
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: 3,
+          spaceBetween: 40,
+        },
+      },
+    });
+
+    // Stop autoplay on hover
+    const carouselElement = document.querySelector('.events-carousel');
+    carouselElement.addEventListener('mouseenter', () => {
+      swiper.autoplay.stop();
+    });
+    carouselElement.addEventListener('mouseleave', () => {
+      swiper.autoplay.start();
+    });
+
+    /**
+     * Frequently Asked Questions Toggle
+     */
+    document.querySelectorAll('.faq-item h3, .faq-item .faq-toggle').forEach((faqItem) => {
+      faqItem.addEventListener('click', () => {
+        faqItem.parentNode.classList.toggle('faq-active');
+      });
+    });
+
+    /**
+     * Correct scrolling position upon page load for URLs containing hash links.
+     */
+    window.addEventListener('load', function (e) {
+      if (window.location.hash) {
+        if (document.querySelector(window.location.hash)) {
+          setTimeout(() => {
+            let section = document.querySelector(window.location.hash);
+            let scrollMarginTop = getComputedStyle(section).scrollMarginTop;
+            window.scrollTo({
+              top: section.offsetTop - parseInt(scrollMarginTop),
+              behavior: 'smooth'
+            });
+          }, 100);
+        }
+      }
+    });
+
+    /**
+     * Navmenu Scrollspy
+     */
+    let navmenulinks = document.querySelectorAll('.navmenu a');
+
+    function navmenuScrollspy() {
+      navmenulinks.forEach(navmenulink => {
+        if (!navmenulink.hash) return;
+        let section = document.querySelector(navmenulink.hash);
+        if (!section) return;
+        let position = window.scrollY + 200;
+        if (position >= section.offsetTop && position <= (section.offsetTop + section.offsetHeight)) {
+          document.querySelectorAll('.navmenu a.active').forEach(link => link.classList.remove('active'));
+          navmenulink.classList.add('active');
+        } else {
+          navmenulink.classList.remove('active');
+        }
+      })
+    }
+    window.addEventListener('load', navmenuScrollspy);
+    document.addEventListener('scroll', navmenuScrollspy);
+
+
+    const isTouchDevice = () => {
+      return (
+        'ontouchstart' in window || // Check for touch events in the browser
+        (window.DocumentTouch && document instanceof DocumentTouch) || // Check for DocumentTouch (older Safari)
+        navigator.maxTouchPoints > 0 || // Check for maxTouchPoints (modern browsers)
+        navigator.msMaxTouchPoints > 0 // Check for msMaxTouchPoints (IE/Edge)
+      );
+    };
+
+    // Usage
+    if (isTouchDevice()) {
+      // Function to check and add/remove class to elements
+      function checkElementsPosition() {
+        const elements = document.querySelectorAll('.service-box'); // Select all elements (adjust selector)
+        const screenHeight = window.innerHeight;
+
+        elements.forEach(element => {
+          const elementRect = element.getBoundingClientRect();
+
+          // Check if the element is centered on the screen (within a threshold range)
+          const isCentered = elementRect.top <= screenHeight / 2 && elementRect.bottom >= screenHeight / 2;
+
+          if (isCentered) {
+            // Add the 'service-handled' class if it's not already added
+            if (!element.classList.contains('service-handled')) {
+              element.classList.add('service-handled');
+            }
+          } else {
+            // Remove the 'service-handled' class if the element has passed the center
+            if (element.classList.contains('service-handled')) {
+              element.classList.remove('service-handled');
+            }
+          }
+        });
+      }
+
+      // Listen to scroll events
+      window.addEventListener('scroll', checkElementsPosition);
+
+      // Optionally, call the function on load to check the initial position if needed
+      checkElementsPosition();
+
+    }
 
   }
 
@@ -265,11 +304,11 @@
 
     // Update the href of the CSS link with the random version query parameter
     var cssLink = document.getElementById('myCssLink');
-    cssLink.href = "assets/css/myCss.css?v=" + randomVersion;
+    cssLink.href = cssLink.href + "?v=" + randomVersion;
 
     // Update the src of the JS script with the random version query parameter
     var jsScript = document.getElementById('myJsScript');
-    jsScript.src = "assets/js/myScript.js?v=" + randomVersion;
+    jsScript.src = jsScript.src + "?v=" + randomVersion;
   });
 
 })();
