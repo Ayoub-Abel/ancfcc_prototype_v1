@@ -2128,7 +2128,8 @@ div#blocs {
     display: flex;
     justify-content: space-around;
     margin: 1rem auto;
-    gap: 11px
+    gap: 10px 0;
+    flex-wrap: wrap;
   }
 
   .steps .step {
@@ -2141,7 +2142,8 @@ div#blocs {
     text-align: center;
     display: flex;
     flex-direction: column;
-    border: 1px dashed var(--form-color)
+    border: 1px dashed var(--form-color);
+    min-width: 223px;
   }
 
   .steps>.step.active {
@@ -2376,6 +2378,12 @@ span.key:hover {
   width: 310px;
   border-radius: 15px;
   height: 270px;
+}
+
+@media (max-width: 375px){
+  .slidercaptcha{
+    margin-left: -5px;
+  }
 }
 
 .slidercaptcha .card-header {
