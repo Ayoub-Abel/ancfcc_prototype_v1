@@ -2,7 +2,7 @@
 
 (function () {
   "use strict";
-   
+
   /**
    * Mobile nav toggle
    */
@@ -130,12 +130,12 @@
           span.textContent = letter;
           typingElement.appendChild(span);
           letterIndex++;
-          setTimeout(typeNextLetter, 25); // Typing speed (25ms per letter)
+          setTimeout(typeNextLetter, 20); // Typing speed (20ms per letter)
         } else {
           typingElement.innerHTML += " "; // Add a space after each word
           wordIndex++;
           letterIndex = 0;
-          setTimeout(typeNextLetter, 400); // Pause 500ms after each word
+          setTimeout(typeNextLetter, 300); // Pause 300ms after each word
         }
       } else {
         setTimeout(() => {

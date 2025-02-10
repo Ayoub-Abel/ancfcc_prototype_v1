@@ -24,7 +24,7 @@
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  
+
 
   <!-- Main CSS File -->
   <link id="myCssLink" href="assets/css/myCss.css" rel="stylesheet">
@@ -130,22 +130,22 @@
               Une fois votre demande est passée et son paiement est effectué vous recevrez par SMS un code de suivi.
 
             </p>
-            <h6 class="advices"><i class="fa-duotone fa-solid fa-circle-exclamation"></i> Les demandes des certificats
-              de propriété électroniques seront traitées pendant les heures de travail.</h6>
+            <p class="advices"><i class="fa-solid fa-circle-exclamation"></i> Les demandes des certificats
+              de propriété électroniques seront traitées pendant les heures de travail.</p>
 
             <form id="demande-cert-form" action="" method="post" class="form">
               <div class="steps">
                 <div class="step active" id="st1">
                   <span class="step-number">1</span>
-                  <span class="step-title">Informations personnelles</span>
+                  <span class="step-title">Saisi d'informations personnelles</span>
                 </div>
                 <div class="step" id="st2">
                   <span class="step-number">2</span>
-                  <span class="step-title">Informations sur titres fonciers</span>
+                  <span class="step-title">Saisi d'informations du titre foncier</span>
                 </div>
                 <div class="step" id="st3">
                   <span class="step-number">3</span>
-                  <span class="step-title">Validation numéro téléphone</span>
+                  <span class="step-title">Confirmation de la commande</span>
                 </div>
               </div>
 
@@ -196,18 +196,18 @@
                   </div>
                   <div class="col-md-3 form-group">
                     <label for="nom-ar">Nom en Arabe</label>
-                    <input type="text" name="nom-ar" id="nom-ar" class="input-req form-control inputField" dir="rtl">
+                    <input type="text" name="nom-ar" id="nom-ar" class="input-req form-control inputs-ar" dir="rtl">
                     <div class="keyboardContainer"></div>
                   </div>
                   <div class="col-md-3 form-group">
                     <label for="prenom-ar">Prénom en Arabe</label>
-                    <input type="text" name="prenom-ar" id="prenom-ar" class="input-req form-control inputField"
+                    <input type="text" name="prenom-ar" id="prenom-ar" class="input-req form-control inputs-ar"
                       dir="rtl">
                     <div class="keyboardContainer"></div>
                   </div>
                   <br>
 
-                  <div class="col-md-1 form-group">
+                  <div class="col-md-2 form-group">
                     <label for="identity-type">Type ID</label>
                     <select name="identity-type" id="identity-type" class="input-req form-control">
                       <option value="cin">CIN</option>
@@ -220,93 +220,119 @@
                     <input type="text" name="identity-number" id="identity-number"
                       class="input-req form-control inputs-alphanum inputs-uppercase">
                   </div>
-                  <div class="col-md-3 form-group">
-                    <label for="email">E-mail</label>
-                    <input type="text" name="email" id="email" class="form-control inputs-email">
-                  </div>
 
-                  <div class="col-md-6 form-group">
+                  <div class="col-md-5 form-group">
                     <label for="adresse">Adresse</label>
                     <input type="text" name="adresse" id="adresse" class="input-req form-control inputs-adresse">
                   </div>
 
+                  <div class="col-md-3 form-group">
+                    <label for="email">E-mail</label>
+                    <input type="text" name="email" id="email" class="form-control inputs-email">
+                  </div>
+                  <div class="col-md-6 form-group mt-5">
+                    <p class="warnings"><i class="fa-solid fa-circle-exclamation"></i> Toutes les données doivent être incluses, complètes et correctes sous peine de rejet.</p>s
+                     <p class="infos"><i class="fa-solid fa-circle-exclamation"></i> Conformément à la loi 09-08, vous disposez d’un droit d’accès, de rectification et d’opposition au traitement de vos données à caractère personnel. 
+                      <br>Ce traitement a été autorisé par la CNDP sous le n° <b>A-PO-538/2021</b>.</p>
+
+                      <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="legal-mentions" name="legal-mentions" required>
+                        <label class="form-check-label" for="legal-mentions">
+                          J’ai lu et j’accepte les <a href="#">mentions légales</a>.
+                        </label>
+                      </div>
+                  </div>
+
+                  <div class="col-md-6 form-group ">
+                    <div class="slidercaptcha card">
+                      <div class="card-header">
+                        <span>Veuillez compléter la vérification de sécurité !</span>
+                      </div>
+                      <div class="card-body">
+                        <div id="captcha"></div>
+                      </div>
+                    </div> 
+                  </div>
                 </div>
-                <div class="wizard-btns">
-                  <button id="next2" class="btn-steps">Suivant</button>
-                </div>
-              </fieldset>
+          </div>
+          <div class="wizard-btns">
+            <button id="next2" class="btn-steps">Suivant</button>
+          </div>
+          </fieldset>
 
-              <fieldset class="d-none" id="step2">
-                <legend>Informations sur les titres fonciers</legend>
+          <fieldset class="d-none" id="step2">
+            <legend>Informations titres fonciers</legend>
 
-                <div class="row">
-                  <div class="col-md-3 form-group">
-                    <label for="DropDownConservation">Conservation foncière</label>
-                    <select name="DropDownConservation" id="DropDownConservation" class="input-req form-control inputs-uppercase">
-                      <!-- Options will be populated dynamically -->
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="num-titre">Numéro titre</label>
-                    <input type="text" name="num-titre" id="num-titre" class="input-req form-control inputs-number">
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="id-indice">Indice</label>
-                    <select name="id-indice" id="id-indice" class="input-req form-control inputs-uppercase">
-                      <option value=""></option>
-                      <option value="273">01</option>
-                      <option value="274">08</option>
-                      <option value="275">12</option>
-                      <option value="276">15</option>
-                      <option value="277">25</option>
-                      <option value="278">33</option>
-                      <option value="279">34</option>
-                      <option value="280">47</option>
-                      <option value="281">53</option>
-                      <option value="282">63</option>
-                      <option value="283">C</option>
-                      <option value="284">D</option>
-                      <option value="285">E</option>
-                      <option value="286">T</option>
-                      <option value="500">D2</option>
-                      <option value="548">D1</option>
-                      <option value="561">86</option>
-                    </select>
-                  </div>
-                  <div class="col-md-3 form-group">
-                    <label for="id-indice-special">Indice spécial</label>
-                    <select name="id-indice-special" id="id-indice-special" class="form-control inputs-uppercase">
-                      <option value=""></option>
-                      <option value="1">BIZ</option>
-                      <option value="2">BIZ1</option>
-                      <option value="3">R</option>
+            <div class="row">
+              <div class="col-md-3 form-group">
+                <label for="DropDownConservation">Conservation foncière</label>
+                <select name="DropDownConservation" id="DropDownConservation"
+                  class="input-req form-control inputs-uppercase">
+                  <!-- Options will be populated dynamically -->
+                        </select>
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label for="num-titre">Numéro titre</label>
+                        <input type="text" name="num-titre" id="num-titre" class="input-req form-control inputs-number">
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label for="id-indice">Indice</label>
+                        <select name="id-indice" id="id-indice" class="input-req form-control inputs-uppercase">
+                          <option value=""></option>
+                          <option value="273">01</option>
+                          <option value="274">08</option>
+                          <option value="275">12</option>
+                          <option value="276">15</option>
+                          <option value="277">25</option>
+                          <option value="278">33</option>
+                          <option value="279">34</option>
+                          <option value="280">47</option>
+                          <option value="281">53</option>
+                          <option value="282">63</option>
+                          <option value="283">C</option>
+                          <option value="284">D</option>
+                          <option value="285">E</option>
+                          <option value="286">T</option>
+                          <option value="500">D2</option>
+                          <option value="548">D1</option>
+                          <option value="561">86</option>
+                        </select>
+                      </div>
+                      <div class="col-md-3 form-group">
+                        <label for="id-indice-special">Indice spécial</label>
+                        <select name="id-indice-special" id="id-indice-special" class="form-control inputs-uppercase">
+                          <option value=""></option>
+                          <option value="1">BIZ</option>
+                          <option value="2">BIZ1</option>
+                          <option value="3">R</option>
 
-                    
-                    </select>
-                  </div> 
 
-                  <button id="addTitreFoncier"><i class="fa-duotone fa-solid fa-circle-plus me-2"></i> Ajouter le titre
-                    foncier</button>
-                  
-                  <div class="list-titre-added">
-                    <table class="table" >
-                      <thead>
-                        <tr>
-                          <th></th>
-                          <th>Titre foncier</th>
-                          <th>Conservation foncière</th>
-                          <th></th>
-                        </tr>
-                      </thead>
-                      <tbody id="titreFoncierTableBody">
-                         
-                      </tbody>
-                    </table>
-                  </div>
-                  <div class="wizard-btns">
-                    <button id="prev1" class="btn-preview">Précedent</button>
-                    <button id="next3" class="btn-steps">Suivant</button>
-                  </div>
+                        </select>
+                      </div>
+
+                      <button id="addTitreFoncier"><i class="fa-duotone fa-solid fa-circle-plus me-2"></i> Ajouter le
+                        titre
+                        foncier</button>
+
+                      <div class="list-titre-added">
+                        <table class="table">
+                          <thead>
+                            <tr>
+                              <th></th>
+                              <th>Titre foncier</th>
+                              <th>Conservation foncière</th>
+                              <th></th>
+                            </tr>
+                          </thead>
+                          <tbody id="titreFoncierTableBody">
+
+                          </tbody>
+                        </table>
+                      </div>
+                      <div class="wizard-btns">
+                        <button id="prev1" class="btn-preview">Précedent</button>
+                        <button id="next3" class="btn-steps">Suivant</button>
+                      </div>
               </fieldset>
 
             </form>
@@ -437,6 +463,7 @@
   <!-- Main JS File -->
   <script id="myJsScript" src="assets/js/myJs.js"></script>
   <script id="myJsScript" src="assets/js/validation.js"></script>
+  <script id="myJsScript" src="assets/js/slider-captcha.js"></script>
 
 
 </body>
