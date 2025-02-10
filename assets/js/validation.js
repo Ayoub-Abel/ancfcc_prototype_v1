@@ -682,7 +682,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.slidercaptcha').style.boxShadow = 'none';
                 document.querySelector('.sliderContainer').style.pointerEvents = 'none';
                 document.querySelector('.sliderContainer').style.opacity = '0.5';
-                
+                showNotification(`Vous avez confirmé que vous n'êtes pas un robot`, 'success');
                 captchaConfirmed = true;
                 captcha.reset();
             }, 500);
