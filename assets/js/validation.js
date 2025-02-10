@@ -86,87 +86,27 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    let allValid;
     document.querySelectorAll('.btn-steps').forEach(button => {
         button.addEventListener('click', (event) => {
             event.preventDefault();
-            let allValid = true;
             let inputsFieldsSet;
+            allValid = true;
+
             switch (button.id) {
                 case "next2":
                     inputsFieldsSet = document.querySelectorAll('#step1 input.input-req');
+                    if (allValid) validateInputsFill(inputsFieldsSet);
+                    if (allValid) validateInputsFormat();
+
                     break;
                 // case "next3":
                 //     inputsFieldsSet = document.querySelectorAll('#step2 .input-req');
+                //     if (allValid) validateInputsFill(inputsFieldsSet);
+                //     if (allValid) validateInputsFormat();
                 //     break;
             }
 
-            inputsFieldsSet.forEach(inputField => {
-                const isProfessionnelField = inputField.closest('.professionnel-fields');
-                const isParticulierChecked = document.querySelector('input[name="type-demandeur"]:checked').value === 'particulier';
-
-                if (isParticulierChecked && isProfessionnelField) {
-                    return; // Skip validation for professionnel fields if particulier is checked
-                }
-
-                if (!inputField.value.trim()) {
-                    showAlertInputs(inputField, 'Champ requis');
-                    allValid = false;
-                } else {
-                    hideAlertInputs(inputField);
-                }
-            });
-
-
-            const emailInput = document.querySelector('.inputs-email');
-            if (emailInput && emailInput.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-                showWarningInputs(emailInput, "Adresse e-mail invalide");
-                allValid = false;
-            }
-
-            const frInputs = document.querySelectorAll('.inputs-fr');
-            frInputs.forEach(frInput => {
-                if (frInput.value.trim() && !/^[a-zA-Z\s]*$/.test(frInput.value)) {
-                    showWarningInputs(frInput, "Seuls les caractères latins sont autorisés");
-                    allValid = false;
-                }
-            });
-
-            document.querySelectorAll('.inputs-ar').forEach(arInput => {
-                if (arInput.value.trim() && !/^[\u0600-\u06FF\s]*$/.test(arInput.value)) {
-                    showWarningInputs(arInput, "Seuls les caractères arabes sont autorisés");
-                    allValid = false;
-                }
-            });
-
-            document.querySelectorAll('.inputs-number').forEach(numberInput => {
-                if (numberInput.value.trim() && !/^[0-9]*$/.test(numberInput.value)) {
-                    showWarningInputs(numberInput, "Seuls les chiffres sont autorisés");
-                    allValid = false;
-                }
-            });
-
-            document.querySelectorAll('.inputs-alphanum').forEach(alphanumInput => {
-                if (alphanumInput.value.trim() && !/^[a-zA-Z0-9\s]*$/.test(alphanumInput.value)) {
-                    showWarningInputs(alphanumInput, "Seuls les caractères alphanumériques sont autorisés");
-                    allValid = false;
-                }
-            });
-
-            const legalMentionsCheckbox = document.getElementById('legal-mentions');
-            if (legalMentionsCheckbox && !legalMentionsCheckbox.checked) {
-                showNotification("Vous devez accepter les mentions légales", 'warning');
-                legalMentionsCheckbox.style.boxShadow = 'red 0px 0px 7px 3px';
-                allValid = false;
-            } else {
-                legalMentionsCheckbox.style.boxShadow = 'none';
-            }
-
-            if (captchaConfirmed == false) {
-                showNotification("Veuillez confirmer que vous n'êtes pas un robot", 'warning');
-                document.querySelector('.slidercaptcha').style.boxShadow = 'red 0px 0px 7px 3px';
-
-                allValid = false;
-            } 
 
             if (allValid) {
                 if (button.id === 'next2') {
@@ -175,22 +115,30 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('step1').classList.add('d-none');
                         document.getElementById('step2').classList.remove('d-none');
                         fadeIn(document.getElementById('step2'));
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
 
                         document.querySelector('#st1').classList.remove('active');
                         document.querySelector('#st2').classList.add('active');
                         document.querySelector('#st1').classList.add('passed');
                     });
                 }
-                // else if (button.id === 'next3') {
-                //     fadeOut(document.getElementById('step2'), () => {
-                //         document.getElementById('step2').classList.add('d-none');
-                //         document.getElementById('step3').classList.remove('d-none');
-                //         fadeIn(document.getElementById('step3'));
+                else if (button.id === 'next3') {
+                    if (document.getElementById('titreFoncierTableBody').querySelectorAll('tr').length > 0) {
+                        fadeOut(document.getElementById('step2'), () => {
+                            document.getElementById('step2').classList.add('d-none');
+                            document.getElementById('step3').classList.remove('d-none');
+                            fadeIn(document.getElementById('step3'));
+                            window.scrollTo({ top: 0, behavior: 'smooth' });
 
-                //         document.querySelector('#st2').classList.remove('active');
-                //         document.querySelector('#st3').classList.add('active');
-                //     });
-                // } 
+                            document.querySelector('#st2').classList.remove('active');
+                            document.querySelector('#st3').classList.add('active');
+                            document.querySelector('#st2').classList.add('passed');
+
+                        });
+                    } else {
+                        showNotification('Veuillez ajouter au moins un titre foncier', 'danger');
+                    }
+                }
             }
         });
     });
@@ -223,7 +171,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const indice = document.getElementById('id-indice');
             const indiceSpecial = document.getElementById('id-indice-special');
 
-            const tableBody = document.getElementById('titreFoncierTableBody');
+            const tableBody = document.getElementById('titreFoncierTableBody'); 
+
             const newRowContent = (indiceSpecial.options[indiceSpecial.selectedIndex].text == "") ?
                 `${numTitre}/${indice.options[indice.selectedIndex].text}` :
                 `${numTitre}/${indice.options[indice.selectedIndex].text}/${indiceSpecial.options[indiceSpecial.selectedIndex].text}`;
@@ -241,14 +190,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            checkAccessConditions(newRowContent, conservation, tableBody);
-
+            checkAccessConditions(newRowContent, conservation, tableBody); 
 
         }
     });
 
     let accessCount = 0;
     const checkAccessConditions = (newRowContent = '', conservation = '', tableBody = '') => {
+
+        let tableConfirmed = document.getElementById('titreFoncierTableConfirmed');
+        
         accessCount++;
         showPreloader('Vérification du titre foncier...');
         if (accessCount === 1) {
@@ -256,30 +207,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
             setTimeout(() => {
                 showNotification('Erreur lors de la vérification du titre foncier !!', 'danger');
-            }, 2000);
+            }, 500);
         } else if (accessCount === 2) {
             // Second time access condition
             setTimeout(() => {
                 showNotification(`Titre foncier "${newRowContent}" non disponible  !!`, 'warning');
-            }, 2000);
+            }, 500);
         } else if (accessCount >= 3) {
 
             setTimeout(() => {
                 showNotification(`Titre foncier "${newRowContent}" disponible`, 'success');
-            }, 2000);
+            }, 500);
 
             // Proceed with adding the new row
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
             <td class="text-center"><i class="fa-solid fa-circle-check text-success "></i></td>
             <td>${newRowContent}</td>
-            <td>${conservation.options[conservation.selectedIndex].text}</td>
+            <td>${conservation.options[conservation.selectedIndex].text}</td> 
             <td><i class="fa-duotone fa-solid fa-trash remove-titre text-danger"></i></td>
-        `;
+            `; 
 
             tableBody.appendChild(newRow);
-            document.querySelector('.list-titre-added table').style.display = 'table';
-
 
             // Disable the dropdown
             conservation.disabled = true;
@@ -296,8 +245,50 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (tableBody.children.length === 0) {
                     conservation.disabled = false;
                 }
+                // Remove corresponding row from tableConfirmed
+                if (tableConfirmed) {
+                    tableConfirmed.innerHTML = tableBody.innerHTML;
+                    tableConfirmed.querySelectorAll('tr').forEach(row => {
+                        if (row.cells[3]) {
+                            row.cells[3].innerText = '100';
+                        }
+                    });
+                    // Compute the total of the 4th cell values from the body rows
+                    let total = 0;
+                    tableConfirmed.querySelectorAll('tr').forEach(row => {
+                        if (row.cells[3]) {
+                            total += parseFloat(row.cells[3].innerText) || 0;
+                        }
+                    });
+                    // Create or update the tfoot with the total in the 4th cell
+                    let tfoot = tableConfirmed.nextElementSibling; 
+                    tfoot.querySelector('tr').cells[3].innerText = total;
+                }
             });
 
+            // Remove corresponding row from tableConfirmed
+            if (tableConfirmed) {
+                tableConfirmed.innerHTML = tableBody.innerHTML;
+                tableConfirmed.querySelectorAll('tr').forEach(row => {
+                    if (row.cells[3]) {
+                        row.cells[3].innerText = '100';
+                    }
+                });
+                // Compute the total of the 4th cell values from the body rows
+                let total = 0;
+                tableConfirmed.querySelectorAll('tr').forEach(row => {
+                    if (row.cells[3]) {
+                        total += parseFloat(row.cells[3].innerText) || 0;
+                    }
+                });
+                // Create or update the tfoot with the total in the 4th cell
+                let tfoot = tableConfirmed.nextElementSibling; 
+                tfoot.querySelector('tr').cells[3].innerText = total;
+            }
+            
+            document.querySelectorAll('.list-titre-added table').forEach(element => {
+                element.style.display = 'table';
+            }); 
             accessCount = 0; // Reset the count to loop
         }
         closePreloader()
@@ -317,6 +308,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         document.querySelector('#st1').classList.add('active');
                         document.querySelector('#st2').classList.remove('active');
+                        document.querySelector('#st2').classList.remove('passed');
+
                     });
                     break;
                 case "prev2":
@@ -329,7 +322,6 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.querySelector('#st3').classList.remove('active');
                     });
                     break;
-                // Add more cases for other steps if needed
             }
         });
     });
@@ -663,7 +655,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (preloader) {
                 preloader.remove();
             }
-        }, 2000);
+        }, 500);
 
     };
 
@@ -679,18 +671,112 @@ document.addEventListener('DOMContentLoaded', () => {
         onSuccess: function () {
             setTimeout(function () {
 
-                document.querySelector('.slidercaptcha').style.boxShadow = 'none';
+                showNotification(`Vous avez confirmé que vous n'êtes pas un robot`, 'success');
                 document.querySelector('.sliderContainer').style.pointerEvents = 'none';
                 document.querySelector('.sliderContainer').style.opacity = '0.5';
-                showNotification(`Vous avez confirmé que vous n'êtes pas un robot`, 'success');
                 captchaConfirmed = true;
-                captcha.reset();
-            }, 500);
+                // captcha.reset();
+            }, 100);
         },
         setSrc: function () {
             //return 'https://picsum.photos/' + Math.round(Math.random() * 136) + '.jpg';
         },
     });
 
+
+    const validateInputsFormat = () => {
+
+        const emailInput = document.querySelector('.inputs-email');
+        if (emailInput && emailInput.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+            showWarningInputs(emailInput, "Adresse e-mail invalide");
+            emailInput.focus();
+            allValid = false;
+        }
+
+        const frInputs = document.querySelectorAll('.inputs-fr');
+        frInputs.forEach(frInput => {
+            if (frInput.value.trim() && !/^[a-zA-Z\s]*$/.test(frInput.value)) {
+                showWarningInputs(frInput, "Seuls les caractères latins sont autorisés");
+                frInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-ar').forEach(arInput => {
+            if (arInput.value.trim() && !/^[\u0600-\u06FF\s]*$/.test(arInput.value)) {
+                showWarningInputs(arInput, "Seuls les caractères arabes sont autorisés");
+                arInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-number').forEach(numberInput => {
+            if (numberInput.value.trim() && !/^[0-9]*$/.test(numberInput.value)) {
+                showWarningInputs(numberInput, "Seuls les chiffres sont autorisés");
+                numberInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-alphanum').forEach(alphanumInput => {
+            if (alphanumInput.value.trim() && !/^[a-zA-Z0-9\s]*$/.test(alphanumInput.value)) {
+                showWarningInputs(alphanumInput, "Seuls les caractères alphanumériques sont autorisés");
+                alphanumInput.focus();
+                allValid = false;
+            }
+        });
+
+
+        if (!allValid) {
+            showNotification('Veuillez vérifier le format saisi', 'danger');
+            return;
+        }
+
+        if (allValid) {
+            // alert(allValid)
+            const legalMentionsCheckbox = document.getElementById('legal-mentions');
+            if (legalMentionsCheckbox && !legalMentionsCheckbox.checked) {
+                showNotification("Vous devez accepter les mentions légales", 'warning');
+                legalMentionsCheckbox.style.borderColor = 'red';
+                allValid = false;
+                return;
+            } else {
+                legalMentionsCheckbox.style.borderColor = '#dee2e6';
+                if (captchaConfirmed == false) {
+                    showNotification("Veuillez confirmer que vous n'êtes pas un robot", 'warning');
+                    document.querySelector('.slidercaptcha').style.borderColor = 'red';
+
+                    allValid = false;
+                    return;
+                } else {
+                    document.querySelector('.slidercaptcha').style.borderColor = '#dee2e6';
+
+                }
+
+            }
+        }
+
+    }
+
+    const validateInputsFill = (inputsFieldsSet) => {
+        inputsFieldsSet.forEach(inputField => {
+            const isProfessionnelField = inputField.closest('.professionnel-fields');
+            const isParticulierChecked = document.querySelector('input[name="type-demandeur"]:checked').value === 'particulier';
+
+            if (isParticulierChecked && isProfessionnelField) {
+                return; // Skip validation for professionnel fields if particulier is checked
+            }
+
+            if (!inputField.value.trim()) {
+                showAlertInputs(inputField, 'Champ requis');
+                showNotification('Veuillez remplir tous les champs requis', 'danger');
+                inputField.focus();
+                allValid = false;
+                return;
+            } else {
+                hideAlertInputs(inputField);
+            }
+        });
+    }
 
 });

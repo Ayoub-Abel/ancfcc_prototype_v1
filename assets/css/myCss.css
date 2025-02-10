@@ -2179,7 +2179,8 @@ div#blocs {
   }
 
   .btn-steps,
-  .btn-preview {
+  .btn-preview,
+  .btn-confirm {
     background: none;
     border: 1px solid var(--form-color);
     border-radius: 4px;
@@ -2188,6 +2189,15 @@ div#blocs {
     min-width: 10%;
     transition: all .3s;
     color: var(--form-color)
+  }
+
+  .btn-confirm{
+    background: rgb(0, 188, 0);
+    color: #fff;
+    border: none;
+  }
+  .btn-confirm:hover{
+    background: green
   }
 
   .btn-steps:hover,
@@ -2382,7 +2392,7 @@ span.key:hover {
 
 @media (max-width: 375px){
   .slidercaptcha{
-    margin-left: -5px;
+    margin-left: -0.5rem;
   }
 }
 
