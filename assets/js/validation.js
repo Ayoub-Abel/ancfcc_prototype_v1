@@ -1,7 +1,187 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-    var captchaConfirmed = false;
+    const validateInputsFormat = () => {
 
+        const emailInput = document.querySelector('.inputs-email');
+        if (emailInput && emailInput.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
+            showWarningInputs(emailInput, "Adresse e-mail invalide");
+            emailInput.focus();
+            allValid = false;
+        }
+
+
+        const frInputs = document.querySelectorAll('.inputs-fr');
+        frInputs.forEach(frInput => {
+            if (frInput.value.trim() && !/^[a-zA-Z\s]*$/.test(frInput.value)) {
+                showWarningInputs(frInput, "Seuls les caractères latins sont autorisés");
+                frInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-ar').forEach(arInput => {
+            if (arInput.value.trim() && !/^[\u0600-\u06FF\s]*$/.test(arInput.value)) {
+                showWarningInputs(arInput, "Seuls les caractères arabes sont autorisés");
+                arInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-number').forEach(numberInput => {
+            if (numberInput.value.trim() && !/^[0-9]*$/.test(numberInput.value)) {
+                showWarningInputs(numberInput, "Seuls les chiffres sont autorisés");
+                numberInput.focus();
+                allValid = false;
+            }
+        });
+
+        document.querySelectorAll('.inputs-alphanum').forEach(alphanumInput => {
+            if (alphanumInput.value.trim() && !/^[a-zA-Z0-9\s]*$/.test(alphanumInput.value)) {
+                showWarningInputs(alphanumInput, "Seuls les caractères alphanumériques sont autorisés");
+                alphanumInput.focus();
+                allValid = false;
+            }
+        });
+
+
+        if (!allValid) {
+            showNotification('Veuillez vérifier le format saisi', 'danger');
+            return;
+        }
+
+    }
+
+    const validateInputsFill = (inputsFieldsSet) => {
+        inputsFieldsSet.forEach(inputField => {
+            const isProfessionnelField = inputField.closest('.professionnel-fields');
+            const isParticulierChecked = document.querySelector('input[name="type-demandeur"]:checked').value === 'particulier';
+
+            if (isParticulierChecked && isProfessionnelField) {
+                return; // Skip validation for professionnel fields if particulier is checked
+            }
+
+            if (!inputField.value.trim()) {
+                showAlertInputs(inputField, 'Champ requis');
+                showNotification('Veuillez remplir tous les champs requis', 'danger');
+                inputField.focus();
+                allValid = false;
+                return;
+            } else {
+                hideAlertInputs(inputField);
+            }
+        });
+    }
+
+    const validatePolicy = () => {
+
+        // alert(allValid)
+        const legalMentionsCheckbox = document.getElementById('legal-mentions');
+        if (legalMentionsCheckbox && !legalMentionsCheckbox.checked) {
+            showNotification("Vous devez accepter les mentions légales", 'warning');
+            legalMentionsCheckbox.style.borderColor = 'red';
+            allValid = false;
+            return;
+        }
+        else
+            legalMentionsCheckbox.style.borderColor = '#dee2e6';
+    }
+
+    const validateCaptcha = () => {
+
+        const userInput = document.getElementById("captchaInput");  // Get user's input 
+        if (!verifyCaptcha(userInput))  // Get user's input 
+        {
+            showNotification("Code captcha saisi incorrect !!", 'warning');
+            userInput.style.borderColor = 'red';
+
+            allValid = false;
+            return;
+        } else {
+            userInput.style.borderColor = '#dee2e6';
+        }
+
+    }
+
+    /**
+     * Captcha config
+     */
+    const generateRandomAlphanum = (length = 4) => {
+        const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+        let result = "";
+        for (let i = 0; i < length; i++) {
+            result += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        return result;
+    };
+
+    const generateCaptchaImage = () => {
+        const captchaText = generateRandomAlphanum();
+        const canvas = document.createElement("canvas");
+        canvas.width = 130;
+        canvas.height = 50;
+        const ctx = canvas.getContext("2d");
+
+        // Draw background
+        ctx.fillStyle = "#f0f0f0";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.font = "40px Arial";
+        ctx.fillStyle = "#000";
+        ctx.textBaseline = "middle";
+
+        // Render each character with slight rotation
+        let x = 10;
+        for (let i = 0; i < captchaText.length; i++) {
+            const char = captchaText.charAt(i);
+            const angle = (Math.random() - 0.5) * 0.4; // Random rotation between -0.2 and 0.2 radians
+            ctx.save();
+            ctx.translate(x, canvas.height / 2);
+            ctx.rotate(angle);
+            ctx.fillText(char, 0, 0);
+            ctx.restore();
+            x += 20;
+        }
+
+        // Add interference lines
+        for (let i = 0; i < 20; i++) {
+            ctx.strokeStyle = `rgba(0, 0, 0, ${Math.random()})`;
+            ctx.beginPath();
+            ctx.moveTo(Math.random() * canvas.width, Math.random() * canvas.height);
+            ctx.lineTo(Math.random() * canvas.width, Math.random() * canvas.height);
+            ctx.stroke();
+        }
+
+        return { captchaText, dataUrl: canvas.toDataURL() };
+    };
+
+    const initCaptcha = () => {
+        const captchaContainer = document.getElementById('captcha');
+
+        const { captchaText, dataUrl } = generateCaptchaImage();
+        captchaContainer.innerHTML = "";
+        const img = document.createElement("img");
+        img.classList.add('me-2')
+        img.src = dataUrl;
+        captchaContainer.appendChild(img);
+
+        // Save the new CAPTCHA text globally
+        window.generatedCaptchaText = captchaText;
+
+        // Create and append the refresh icon instead of a button
+        const refreshIcon = document.createElement("i");
+        refreshIcon.classList.add("fa", "fa-refresh");
+        refreshIcon.style.cursor = "pointer";
+        refreshIcon.style.marginLeft = "10px";
+
+        // Pass the captchaContainer to initCaptcha when the icon is clicked
+        refreshIcon.addEventListener("click", () => initCaptcha());
+        captchaContainer.appendChild(refreshIcon);
+    };
+
+
+    /**
+     * Keyboard arabic config
+     */
     const arabicKeys = [
         "ض", "ص", "ث", "ق", "ف", "غ", "ع", "ه", "خ", "ح", "ج", "د",
         "ش", "س", "ي", "ب", "ل", "ا", "ت", "ن", "م", "ك", "ط", "ذ",
@@ -86,6 +266,73 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    const phoneInput = document.getElementById('num-phone');
+    var phoneInputValid = false;
+
+    // Function to validate and format the phone number
+    const validateAndFormatPhoneNumber = (value) => {
+        const formatter = new libphonenumber.AsYouType();
+        const formattedNumber = formatter.input(value);
+        const parsedNumber = formatter.getNumber();
+
+        return {
+            isValid: parsedNumber ? parsedNumber.isValid() : false,
+            formattedNumber,
+        };
+    };
+
+    // Function to update validation state
+    const updateValidationState = (isValid) => {
+        if (!isValid) {
+
+            showAlertInputs(phoneInput, 'Numéro invalide');
+            phoneInputValid = false;
+        }
+        else {
+            hideAlertInputs(phoneInput);
+            phoneInputValid = true;
+        }
+    };
+
+    // Initialize the input with the detected country code
+    const initializePhoneInput = async () => {
+        const countryCode = '+212';
+        phoneInput.value = countryCode;
+
+        // Validate and format on typing (input event)
+        phoneInput.addEventListener('input', (event) => {
+            const value = event.target.value;
+
+            // Ensure the input starts with '+'
+            if (!value.startsWith('+')) {
+                event.target.value = countryCode + value.replace(/\D+/g, '');
+                return;
+            }
+
+            const { isValid, formattedNumber } = validateAndFormatPhoneNumber(value);
+            event.target.value = formattedNumber;
+            updateValidationState(isValid);
+        });
+
+        // Re-validate on leaving the input (blur event)
+        phoneInput.addEventListener('blur', (event) => {
+            const value = event.target.value;
+            const { isValid } = validateAndFormatPhoneNumber(value);
+            updateValidationState(isValid);
+        });
+
+        // Prevent deleting the '+' symbol
+        phoneInput.addEventListener('keydown', (event) => {
+            const selectionStart = event.target.selectionStart;
+            if (selectionStart <= 1 && event.key === 'Backspace') {
+                event.preventDefault();
+            }
+        });
+    };
+
+    // Start the process
+    initializePhoneInput();
+
     let allValid;
     document.querySelectorAll('.btn-steps').forEach(button => {
         button.addEventListener('click', (event) => {
@@ -98,15 +345,18 @@ document.addEventListener('DOMContentLoaded', () => {
                     inputsFieldsSet = document.querySelectorAll('#step1 input.input-req');
                     if (allValid) validateInputsFill(inputsFieldsSet);
                     if (allValid) validateInputsFormat();
-
+                    if (allValid) {
+                        validatePolicy();
+                        validateCaptcha();
+                    }
                     break;
-                // case "next3":
-                //     inputsFieldsSet = document.querySelectorAll('#step2 .input-req');
-                //     if (allValid) validateInputsFill(inputsFieldsSet);
-                //     if (allValid) validateInputsFormat();
-                //     break;
+                case "confirmCommande":
+                    inputsFieldsSet = document.querySelectorAll('#step3 input.input-req');
+                    if (allValid) validateInputsFill(inputsFieldsSet);
+                    if (allValid) validateInputsFormat();
+                    alert('Redirection vers CMI pour le paiement ')
+                    break;
             }
-
 
             if (allValid) {
                 if (button.id === 'next2') {
@@ -115,7 +365,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         document.getElementById('step1').classList.add('d-none');
                         document.getElementById('step2').classList.remove('d-none');
                         fadeIn(document.getElementById('step2'));
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                        window.scrollTo({ top: 225, behavior: 'smooth' });
 
                         document.querySelector('#st1').classList.remove('active');
                         document.querySelector('#st2').classList.add('active');
@@ -128,7 +378,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             document.getElementById('step2').classList.add('d-none');
                             document.getElementById('step3').classList.remove('d-none');
                             fadeIn(document.getElementById('step3'));
-                            window.scrollTo({ top: 0, behavior: 'smooth' });
+                            window.scrollTo({ top: 225, behavior: 'smooth' });
 
                             document.querySelector('#st2').classList.remove('active');
                             document.querySelector('#st3').classList.add('active');
@@ -138,6 +388,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     } else {
                         showNotification('Veuillez ajouter au moins un titre foncier', 'danger');
                     }
+                } else if (button.id == 'confirmCommande') {
+
                 }
             }
         });
@@ -158,8 +410,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (!inputField.value.trim()) {
                 showAlertInputs(inputField, 'Champ requis');
+                showNotification('Veuillez remplir tous les champs requis', 'danger');
                 allValid = false;
-            } else {
+                return;
+            } else if (validateInputsFormat()) {
+                showNotification('Veuillez vérifier le format saisi', 'danger');
+                allValid = false;
+                return;
+            }
+            else {
                 hideAlertInputs(inputField);
             }
         });
@@ -171,7 +430,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const indice = document.getElementById('id-indice');
             const indiceSpecial = document.getElementById('id-indice-special');
 
-            const tableBody = document.getElementById('titreFoncierTableBody'); 
+            const tableBody = document.getElementById('titreFoncierTableBody');
 
             const newRowContent = (indiceSpecial.options[indiceSpecial.selectedIndex].text == "") ?
                 `${numTitre}/${indice.options[indice.selectedIndex].text}` :
@@ -190,7 +449,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            checkAccessConditions(newRowContent, conservation, tableBody); 
+            checkAccessConditions(newRowContent, conservation, tableBody);
 
         }
     });
@@ -199,7 +458,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const checkAccessConditions = (newRowContent = '', conservation = '', tableBody = '') => {
 
         let tableConfirmed = document.getElementById('titreFoncierTableConfirmed');
-        
+
         accessCount++;
         showPreloader('Vérification du titre foncier...');
         if (accessCount === 1) {
@@ -226,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <td>${newRowContent}</td>
             <td>${conservation.options[conservation.selectedIndex].text}</td> 
             <td><i class="fa-duotone fa-solid fa-trash remove-titre text-danger"></i></td>
-            `; 
+            `;
 
             tableBody.appendChild(newRow);
 
@@ -261,8 +520,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         }
                     });
                     // Create or update the tfoot with the total in the 4th cell
-                    let tfoot = tableConfirmed.nextElementSibling; 
-                    tfoot.querySelector('tr').cells[3].innerText = total;
+                    let tfoot = tableConfirmed.nextElementSibling;
+                    tfoot.querySelector('tr').cells[2].innerText = total + ' DH (TTC)';
                 }
             });
 
@@ -282,13 +541,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 // Create or update the tfoot with the total in the 4th cell
-                let tfoot = tableConfirmed.nextElementSibling; 
-                tfoot.querySelector('tr').cells[3].innerText = total;
+                let tfoot = tableConfirmed.nextElementSibling;
+                tfoot.querySelector('tr').cells[2].innerText = total + ' DH (TTC)';
             }
-            
+
             document.querySelectorAll('.list-titre-added table').forEach(element => {
                 element.style.display = 'table';
-            }); 
+            });
             accessCount = 0; // Reset the count to loop
         }
         closePreloader()
@@ -372,7 +631,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert.style.opacity = '0';
             setTimeout(() => alert.remove(), 1500);
 
-            inputField.style.borderColor = '#dee2e6';
+            inputField.style.borderColor = '#01cd01';
 
         }
     };
@@ -644,6 +903,7 @@ document.addEventListener('DOMContentLoaded', () => {
         TextPreloader.style.position = 'absolute';
         TextPreloader.style.top = '50%';
         TextPreloader.style.left = '50%';
+        TextPreloader.style.textAlign = 'center';
         TextPreloader.style.transform = 'translate(-50%, -50%)';
         document.body.appendChild(preloader);
     };
@@ -659,124 +919,83 @@ document.addEventListener('DOMContentLoaded', () => {
 
     };
 
+    // Initial generation of the CAPTCHA with refresh icon
+    initCaptcha();
+
+    // Function to verify user input against the CAPTCHA
+    function verifyCaptcha(userInput) {
+        if (userInput.value === window.generatedCaptchaText) {
+            return true;
+        }
+        initCaptcha();
+        return false;
+    }
 
 
-    // ----set-captcha with script
-    var captcha = sliderCaptcha({
-        id: 'captcha',
-        loadingText: 'Chargement...',
-        failedText: 'Réessayez',
-        barText: 'Glissez vers la droite pour remplir',
-        repeatIcon: 'fa fa-redo',
-        onSuccess: function () {
-            setTimeout(function () {
+    // send SMS 
+    const sendSMS = document.getElementById('btn-sendCode');
+    const numPhone = document.getElementById('num-phone');
+    const codePhone = document.getElementById('code-phone');
 
-                showNotification(`Vous avez confirmé que vous n'êtes pas un robot`, 'success');
-                document.querySelector('.sliderContainer').style.pointerEvents = 'none';
-                document.querySelector('.sliderContainer').style.opacity = '0.5';
-                captchaConfirmed = true;
-                // captcha.reset();
-            }, 100);
-        },
-        setSrc: function () {
-            //return 'https://picsum.photos/' + Math.round(Math.random() * 136) + '.jpg';
-        },
+    sendSMS.addEventListener("click", (event) => {
+        event.preventDefault()
+
+        if (phoneInputValid) {
+            codePhone.parentElement.classList.remove('d-none')
+            numPhone.parentElement.classList.add('d-none')
+            codePhone.focus()
+        }
+        else {
+            numPhone.focus()
+            showNotification('Veuillez saisir un numéro valide !!', 'danger')
+        }
     });
 
 
-    const validateInputsFormat = () => {
+    codePhone.addEventListener("input", (event) => {
+        // Get the current value of the input field
+        let value = event.target.value;
+        const iconLoad = document.querySelector('.loading-icon');
+        const confirmCommande = document.querySelector('#confirmCommande');
+        
+        // Remove any non-digit characters (only keep digits)
+        value = value.replace(/\D/g, "");
 
-        const emailInput = document.querySelector('.inputs-email');
-        if (emailInput && emailInput.value.trim() && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailInput.value)) {
-            showWarningInputs(emailInput, "Adresse e-mail invalide");
-            emailInput.focus();
-            allValid = false;
+        // Limit the input to 4 digits
+        if (value.length > 4) {
+            value = value.substring(0, 4); // Restrict to 4 digits
+            value = ''
         }
 
-        const frInputs = document.querySelectorAll('.inputs-fr');
-        frInputs.forEach(frInput => {
-            if (frInput.value.trim() && !/^[a-zA-Z\s]*$/.test(frInput.value)) {
-                showWarningInputs(frInput, "Seuls les caractères latins sont autorisés");
-                frInput.focus();
-                allValid = false;
+        // Add dashes after every digit except the 4th one
+        let formattedValue = "";
+        for (let i = 0; i < value.length; i++) {
+            formattedValue += value[i];
+            // Add a dash after every digit except the 4th one
+            if (i !== 3 && i !== value.length - 1) {
+                formattedValue += " - ";
             }
-        });
+        }
 
-        document.querySelectorAll('.inputs-ar').forEach(arInput => {
-            if (arInput.value.trim() && !/^[\u0600-\u06FF\s]*$/.test(arInput.value)) {
-                showWarningInputs(arInput, "Seuls les caractères arabes sont autorisés");
-                arInput.focus();
-                allValid = false;
-            }
-        });
+        // Update the input field with the formatted value
+        event.target.value = formattedValue;
 
-        document.querySelectorAll('.inputs-number').forEach(numberInput => {
-            if (numberInput.value.trim() && !/^[0-9]*$/.test(numberInput.value)) {
-                showWarningInputs(numberInput, "Seuls les chiffres sont autorisés");
-                numberInput.focus();
-                allValid = false;
-            }
-        });
+        // Check if the value length is exactly 4 digits
+        iconLoad.lastElementChild.classList.add('d-none');
+        if (value.length === 4) {
 
-        document.querySelectorAll('.inputs-alphanum').forEach(alphanumInput => {
-            if (alphanumInput.value.trim() && !/^[a-zA-Z0-9\s]*$/.test(alphanumInput.value)) {
-                showWarningInputs(alphanumInput, "Seuls les caractères alphanumériques sont autorisés");
-                alphanumInput.focus();
-                allValid = false;
-            }
-        });
-
-
-        if (!allValid) {
-            showNotification('Veuillez vérifier le format saisi', 'danger');
+            // Toggle visibility of icons on the 4th digit input
+            iconLoad.firstElementChild.classList.toggle('d-none');
+            setTimeout(() => {
+                iconLoad.firstElementChild.classList.toggle('d-none');
+                iconLoad.lastElementChild.classList.toggle('d-none');
+                confirmCommande.style.cursor = 'pointer'
+                confirmCommande.style.opacity = 1
+                confirmCommande.style.disabled = "false"
+            }, 500); // Hide the icon after 2 seconds
             return;
         }
-
-        if (allValid) {
-            // alert(allValid)
-            const legalMentionsCheckbox = document.getElementById('legal-mentions');
-            if (legalMentionsCheckbox && !legalMentionsCheckbox.checked) {
-                showNotification("Vous devez accepter les mentions légales", 'warning');
-                legalMentionsCheckbox.style.borderColor = 'red';
-                allValid = false;
-                return;
-            } else {
-                legalMentionsCheckbox.style.borderColor = '#dee2e6';
-                if (captchaConfirmed == false) {
-                    showNotification("Veuillez confirmer que vous n'êtes pas un robot", 'warning');
-                    document.querySelector('.slidercaptcha').style.borderColor = 'red';
-
-                    allValid = false;
-                    return;
-                } else {
-                    document.querySelector('.slidercaptcha').style.borderColor = '#dee2e6';
-
-                }
-
-            }
-        }
-
-    }
-
-    const validateInputsFill = (inputsFieldsSet) => {
-        inputsFieldsSet.forEach(inputField => {
-            const isProfessionnelField = inputField.closest('.professionnel-fields');
-            const isParticulierChecked = document.querySelector('input[name="type-demandeur"]:checked').value === 'particulier';
-
-            if (isParticulierChecked && isProfessionnelField) {
-                return; // Skip validation for professionnel fields if particulier is checked
-            }
-
-            if (!inputField.value.trim()) {
-                showAlertInputs(inputField, 'Champ requis');
-                showNotification('Veuillez remplir tous les champs requis', 'danger');
-                inputField.focus();
-                allValid = false;
-                return;
-            } else {
-                hideAlertInputs(inputField);
-            }
-        });
-    }
+    });
+ 
 
 });

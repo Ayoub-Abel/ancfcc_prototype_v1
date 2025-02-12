@@ -25,6 +25,7 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
 
+  <script src="https://unpkg.com/libphonenumber-js@1.x/bundle/libphonenumber-js.min.js"></script>
 
   <!-- Main CSS File -->
   <link id="myCssLink" href="assets/css/myCss.css" rel="stylesheet">
@@ -100,14 +101,11 @@
 
 
           <li id="lang"><i class="fa-duotone fa-solid fa-earth-africa"></i>
-            <a href="./ar.html">Version Arabe</a>
+            <a href="./ar.html">النسخة العربية</a>
           </li>
 
         </ul>
-
-        <!-- <div class="language"><i class="fa-duotone fa-solid fa-earth-africa"></i> <span>Version Arabe</span></div> -->
-        <!-- <div class="language"><i class="fa-duotone fa-solid fa-earth-africa"></i> <span>Version Arabe</span></div> -->
-
+ 
         <i class="mobile-nav-toggle d-xl-none fa-duotone fa-solid fa-bars"></i>
       </nav>
     </div>
@@ -149,7 +147,7 @@
                 </div>
               </div>
 
-              <fieldset id="step1">
+              <fieldset  id="step1">
                 <legend>Informations personnelles</legend>
                 <div class="row">
                   <div class="col-md-6 form-group ">
@@ -210,7 +208,7 @@
                   <div class="col-md-2 form-group">
                     <label for="identity-type">Type ID</label>
                     <select name="identity-type" id="identity-type" class="input-req form-control">
-                      <option value="cin">CIN</option>
+                      <option value="cine">CIN</option>
                       <option value="passport">Passport</option>
                       <option value="carte-sejour">Carte de Séjour</option>
                     </select>
@@ -248,18 +246,22 @@
                     </div>
                   </div>
 
-                  <div class="col-md-6 form-group ">
-                    <div class="slidercaptcha card">
-                      <div class="card-header">
-                        <span>Veuillez compléter la vérification de sécurité !</span>
+                  <div class="col-md-6 form-group d-flex align-items-end justify-content-center">
+                    <div class="verification-code">
+                      <div id="captcha">
                       </div>
-                      <div class="card-body">
-                        <div id="captcha"></div>
-                      </div>
-                    </div>
-                  </div>
+                      <div class="form-group">
+                        <label for="adresse">Code captcha</label>
 
+                        <input class="form-control input-captcha" type="text" id="captchaInput"
+                          placeholder="Saisissez le code">
+                      </div>
+
+                    </div>
+
+                  </div>
                 </div>
+
                 <div class="wizard-btns">
                   <button id="next2" class="btn-steps">Suivant</button>
                 </div>
@@ -345,7 +347,9 @@
 
                 <div class="row">
                   <div class="col-md-12 form-group">
-                    <h5>Titre(s) foncier(s) choisi </h5>
+                    <h5> </h5>
+                    <p class="advices"><i class="fa-duotone fa-regular fa-memo-circle-check"></i> Titre(s) foncier(s)
+                      choisi :</p>
                     <div class="list-titre-added">
                       <table class="table">
                         <thead>
@@ -361,19 +365,46 @@
                         </tbody>
                         <tfoot>
                           <th> </th>
-                          <th> </th>
-                          <th>Montant à payer</th>
+                          <th colspan="2">Montant total à payer</th>
                           <th></th>
                         </tfoot>
                       </table>
                     </div>
-                  </div>
+                    <p class="advices"><i class="fa-duotone fa-solid fa-money-check-dollar"></i> Méthode de paiement :
+                    </p>
+                    <div class="payment-method">
+                      <b>Carte bancaire</b>
+                      <img width="130" src="./assets/img/cards.png">
+                    </div>
+
+                    <p class="advices">
+                      <i class="fa-duotone fa-regular fa-mobile"></i> Vérification numéro téléphone via SMS :
+                    </p>
+                    <div class="phone-verification">
+
+                      <div class="col-md-4 form-group">
+                        <label for="num-phone">Numéro Téléphone<span class="text-danger">*</span><span class="exp">(ex:
+                            +212 666 666666/ +33 6 66 66 66 66 )</span></label>
+                        <input type="text" name="num-phone" id="num-phone" class="form-control">
+                        <button class="btn-sendCode" id="btn-sendCode">Envoyer le code par SMS</button>
+                      </div>
+                      <div class="d-none col-md-4 form-group d-flex justify-content-center flex-column align-items-center">
+                        <input type="text" name="code-phone" id="code-phone" placeholder="Saisir code SMS"
+                          class="form-control" />
+                        <span id="" class="loading-icon">
+                          <i class="fa-light fa-loader d-none"></i>
+                          <i class="fa-duotone fa-solid fa-circle-check d-none"></i>
+                        </span>
+                        <p class="infos" id="btn-ResendCode">Renvoyer le code SMS ?</p>
+                      </div>
+
+                    </div>
 
 
-                  <div class="wizard-btns">
-                    <button id="prev2" class="btn-preview">Précedent</button>
-                    <button id="confirmCommande" class="btn-confirm">Confirmer la commmande</button>
-                  </div>
+                    <div class="wizard-btns">
+                      <button id="prev2" class="btn-preview">Précedent</button>
+                      <button id="confirmCommande" class="btn-confirm btn-steps" disabled="true">Confirmer la commande</button>
+                    </div>
               </fieldset>
 
             </form>
@@ -504,7 +535,6 @@
   <!-- Main JS File -->
   <script id="myJsScript" src="assets/js/myJs.js"></script>
   <script id="myJsScript" src="assets/js/validation.js"></script>
-  <script id="myJsScript" src="assets/js/slider-captcha.js"></script>
 
 
 </body>

@@ -1247,7 +1247,6 @@ span.prices {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 1rem
 }
 
 .service-box {
@@ -2058,28 +2057,30 @@ div#blocs {
   margin-top: 70px;
   padding: 30px 0;
 
-  .advices{
+  .advices {
     color: #5056ff;
   }
 
-  .warnings{
+  .warnings {
     color: #ff6500;
   }
 
-   .infos{
+  .infos {
     color: #00d126;
   }
 
-  .advices, .warnings, .infos {
-    font-weight: bold!important; 
+  .advices,
+  .warnings,
+  .infos {
+    font-weight: bold !important;
     font-size: 1rem !important;
     margin: 1rem auto;
   }
 
   .warnings i,
   .advices i,
-  .infos i{
-    font-size: 1rem !important;
+  .infos i {
+    font-size: 1.2rem !important;
     position: relative;
     top: 1px;
   }
@@ -2120,7 +2121,7 @@ div#blocs {
   }
 
   .content p {
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: justify
   }
 
@@ -2191,12 +2192,13 @@ div#blocs {
     color: var(--form-color)
   }
 
-  .btn-confirm{
+  .btn-confirm {
     background: rgb(0, 188, 0);
     color: #fff;
     border: none;
   }
-  .btn-confirm:hover{
+
+  .btn-confirm:hover {
     background: green
   }
 
@@ -2381,162 +2383,86 @@ span.key:hover {
 }
 
 
-
-/*# begin slider-captcha */
-.slidercaptcha {
-  margin: 1rem auto;
-  width: 310px;
-  border-radius: 15px;
-  height: 270px;
-}
-
-@media (max-width: 375px){
-  .slidercaptcha{
-    margin-left: -0.5rem;
-  }
-}
-
-.slidercaptcha .card-header {
-  background: #c4c4c436;
-  color: #747474;
-  
-  border-radius: 15px 15px 0 0;
-}
-
-.slidercaptcha canvas:first-child {
-  border-radius: 15px;
-  /* border: 1px solid #e6e8eb; */
-}
-
-.sliderContainer {
-  position: relative;
-  text-align: center;
-  line-height: 40px;
-  background: #f7f9fa;
-  color: #252627;
-  border-radius: 2px;
-}
-
-.sliderbg {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  background-color: #f7f9fa;
-  height: 40px;
-  border-radius: 2px;
-  border: 1px solid #bcbcbc;
+/* *****   */
+#captcha img {
   border-radius: 5px;
 }
 
-.sliderContainer_active .slider {
-  top: -1px;
-  border: 1px solid #1991FA;
-}
 
-.sliderContainer_active .sliderMask {
-  border-width: 1px 0 1px 1px;
-}
-
-.sliderContainer_success .slider {
-  top: -1px;
-  border: 1px solid #02c076;
-  background-color: #02c076 !important;
-  color: #fff;
-}
-
-.sliderContainer_success .sliderMask {
-  border: 1px solid #52CCBA;
-  border-width: 1px 0 1px 1px;
-  background-color: #D2F4EF;
-}
-
-.sliderContainer_success .sliderIcon:before {
-  content: "\f00c";
-}
-
-.sliderContainer_fail .slider {
-  top: -1px;
-  border: 1px solid #f35c59;
-  background-color: #f35c59;
-  color: #fff;
-}
-
-.sliderContainer_fail .sliderMask {
-  border: 1px solid #f35c59;
-  background-color: #f7dcdd;
-  border-width: 1px 0 1px 1px;
-}
-
-.sliderContainer_fail .sliderIcon:before {
-  content: "\f00d";
-}
-
-.sliderContainer_active .sliderText,
-.sliderContainer_success .sliderText,
-.sliderContainer_fail .sliderText {
-  display: none;
-}
-
-.sliderMask {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 40px;
-  border: 0 solid #d1e9fe;
-  background: #d1e9fe;
-  border-radius: 2px;
-}
-
-.slider {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 40px;
-  height: 40px;
-  background: #fff;
-  box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
-  cursor: pointer;
-  transition: background .2s linear;
-  border-radius: 2px;
+/******* */
+.payment-method,
+.phone-verification {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 10px;
 }
 
-.slider:hover {
-  background: #009efb;
+.payment-method img {
+  width: 140px;
+  border-radius: 5px;
+  padding: 4px;
+  box-shadow: 0 0 4px 1px #ddd
+}
+
+.btn-sendCode {
+  background: #4a4feb;
+  border: none;
   color: #fff;
-  border-color: #009efb;
+  margin: 10px auto;
+  width: fit-content;
+  padding: 5px 15px;
+  display: block;
+  border-radius: 4px;
 }
 
-.slider:hover .sliderIcon {
-  background-position: 0 -13px;
+span.exp {
+  color: #b7b7b7;
+  font-size: .9rem;
 }
 
-.sliderText {
-  position: relative;
+#confirmCommande {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
-.refreshIcon {
-  position: absolute;
-  right: 5px;
-  top: 5px;
+#btn-ResendCode {
+  margin: 5px !important;
+  text-align: right;
+  font-size: .8rem !important;
   cursor: pointer;
-  padding: 6px;
-  color: #fff;
-  background-color: #2196F3;
-  font-size: 14px;
-  border-radius: 50px;
+  width: fit-content;
 }
 
-.refreshIcon:hover {
-  color: #fff;
+#code-phone {
+  width: fit-content;
+  text-align: center
 }
 
-.piece{
+.loading-icon {
   position: absolute;
-    left: 0;
-    top: 0;
+  top: 7px;
+  width: inherit;
+  right: 1px;
+  color: #2ee200;
+  font-size: 1.2rem;
 }
-/*# end slider-captcha */
+
+/* Apply to the span element with the class .loading-icon */
+.loading-icon .fa-loader {
+  display: inline-block;
+  animation: rotate .8s linear infinite; 
+}
+
+/* Define the rotate animation */
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+    /* Initial position */
+  }
+
+  100% {
+    transform: rotate(360deg);
+    /* Complete rotation */
+  }
+}
